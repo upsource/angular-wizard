@@ -1,5 +1,5 @@
 //wizard directive
-angular.module('mgo-angular-wizard').directive('wizard', ['$q','$rootScope',function($q, $rootScope) {
+angular.module('mgo-angular-wizard').directive('wizard', ['$q',function($q) {
 
     function evaluateStateChangeBoundaries(canDoFn,context, transition){
         if(typeof canDoFn === 'undefined'){
@@ -21,7 +21,7 @@ angular.module('mgo-angular-wizard').directive('wizard', ['$q','$rootScope',func
             onEnter:'='
         },
         templateUrl: function(element, attributes) {
-            return $rootScope.$eval(attributes.template || '\'wizard.html\'');
+            return angular.element(element).scope().$eval(attributes.template || '\'wizard.html\'');
         },
 
         //controller for wizard directive, treat this just like an angular controller
