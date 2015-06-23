@@ -1,6 +1,6 @@
 /**
  * Easy to use Wizard library for AngularJS
- * @version v0.4.5 - 2015-06-23 * @link https://github.com/mgonto/angular-wizard
+ * @version v0.4.7 - 2015-06-23 * @link https://github.com/mgonto/angular-wizard
  * @author Martin Gontovnikas <martin@gon.to>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -50,7 +50,7 @@ angular.module('mgo-angular-wizard').directive('wzStep', function() {
 });
 
 //wizard directive
-angular.module('mgo-angular-wizard').directive('wizard', ['$q','$rootScope',function($q, $rootScope) {
+angular.module('mgo-angular-wizard').directive('wizard', ['$q','$rootScope',function($q,$rootScope) {
 
     function evaluateStateChangeBoundaries(canDoFn,context, transition){
         if(typeof canDoFn === 'undefined'){
@@ -72,7 +72,11 @@ angular.module('mgo-angular-wizard').directive('wizard', ['$q','$rootScope',func
             onEnter:'='
         },
         templateUrl: function(element, attributes) {
-            return $rootScope.$eval(attributes.template || '\'wizard.html\'');
+            var scope = angular.element(element).scope();
+            if(!scope){
+                scope = $rootScope;
+            }
+            return scope.$eval(attributes.template || '\'wizard.html\'');
         },
 
         //controller for wizard directive, treat this just like an angular controller
